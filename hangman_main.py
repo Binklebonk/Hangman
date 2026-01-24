@@ -10,12 +10,13 @@ def game(word_to_guess, turns):
     # Setting up the display of what letters you have guessed
     guessed_word = ['_'] * len(word_to_guess)
     guessed_letters = []
+    win = False
 
     for i in range(turns): # Repeating this for the amount of turns you have
         # Printing out turn info
-        print(f'\nYou have {turns} turns left.')
-        print(''.join(guessed_word))
-        guess = input('Enter a letter to guess: ')
+        print(f'You have {turns - i} turns left.')
+        print(f'{''.join(guessed_word)}\n')
+        guess = input('Enter a letter to guess: ').lower()
 
         if guess in guessed_letters: # Making sure you can't guess the same letter twice
             print('You already guessed that.')
@@ -30,8 +31,14 @@ def game(word_to_guess, turns):
                 digit +=1
 
             # Win condition
-            if guessed_word == word_to_guess:
-                print(f'{guessed_word}\nYou win!')
+            if '_' not in guessed_word:
+                print(f'{''.join(guessed_word)}\nYou win!')
+                win = True
+                break
+
+    # Lose
+    if win == False:
+        print(f'You lose! The word was {word_to_guess}.')
 
 if __name__ == '__main__':
     game(word_to_guess=word_to_guess, turns=turns)
