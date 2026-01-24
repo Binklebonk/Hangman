@@ -1,0 +1,28 @@
+{
+    "easy_words": [
+            "apple", "brave", "crane", "dwarf", "eagle", "flame", "grape", "honey", "ivory", "jolly",
+            "knack", "lemon", "mango", "noble", "ocean", "pearl", "quilt", "raven", "sheep", "tiger",
+            "banana", "castle", "danger", "evolve", "forest", "gather", "honest", "island", "jungle", "kitten",
+            "legend", "marble", "nature", "orange", "puzzle", "quartz", "rocket", "silver", "tunnel", "number"
+        ],
+
+    "medium_words": [
+            "admiral", "balance", "capture", "diamond", "eclipse", "freight", "glacier", "harmony", "imagine", "journey",
+            "kingdom", "library", "monster", "network", "orchard", "pioneer", "quality", "respect", "sunrise", "treetop",
+            "absolute", "boundary", "cylinder", "dynamics", "elephant", "festival", "generate", "hospital", "identify", "junction",
+            "keyboard", "lifetime", "magazine", "navigate", "operator", "parallel", "question", "resource", "strategy", "triangle",
+            "adventure", "beautiful", "challenge", "discovery", "education", "fantastic", "happiness", "important", "knowledge", "lifestyle",
+            "marketing", "necessary", "operation", "president", "reduction", "structure", "treatment", "universal", "sabotages", "wonderful"
+    ],
+
+    "hard_words": [
+            "absolutely", "background", "calculator", "definition", "everything", "foundation", "generation", "historical", "importance", "journalist",
+            "literature", "management", "strawberry", "occupation", "squeezable", "reputation", "technology", "understand", "vegetables", "jeopardise",
+            "achievement", "backgrounds", "celebration", "development", "environment", "backstabbed", "accountable", "imagination", "information", "quizzically",
+            "leaderships", "abandonable", "fabricative", "babyproofed", "abolishable", "absorbingly", "safeguarded", "anarchistic", "atmospheric", "disorganise",
+            "appreciation", "acoustically", "bibliography", "exaggeration", "representing", "contemporary", "requirements", "manipulation", "negotiations", "organization",
+            "abbreviating", "intermediate", "confidential", "observations", "satisfaction", "installation", "instructions", "verification", "arrangements", "photographer",
+            "qualification", "beardlessness", "declassifying", "paediatrician", "hallucination", "earthlinesses", "electroplates", "misunderstand",
+            "concentration", "neighbourless", "preoccupation", "objectionable", "revolutionary", "weathercloths", "deactivations", "acknowledging"
+    ]
+}
