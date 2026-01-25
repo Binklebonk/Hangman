@@ -14,18 +14,25 @@ except:
     os.system('pip install easygui') # Using pip to load library
 
 def get_word():
-    user_difficulty = buttonbox(
-        'What difficulty do you want to play?\n',
-        'Difficulty', ['Easy (5-6 letter words)', 'Medium (7-9 letter words)', 'Hard (10-13 letter words)']).lower().strip() # Setting user input to lowercase and removing extra spaces
+    while True:
+        user_difficulty = buttonbox(
+            'What difficulty do you want to play?\n',
+            'Difficulty', ['Easy (5-6 letter words)', 'Medium (7-9 letter words)', 'Hard (10-13 letter words)']) # Setting user input to lowercase and removing extra spaces
+        if user_difficulty == None: # If x button clicked
+            confirm_exit = ynbox('Are you sure you want to exit?', 'Exit confirmation')
+            if confirm_exit:
+                exit()
+        else: break # Continue in loop if no
+
     try: # Opening the json file with word lists
         with open('words.json', 'r') as f:
             data = json.load(f)
         # Returning random word from corresponding list depending on chosen difficulty
-        if user_difficulty == 'easy (5-6 letter words)':
+        if user_difficulty == 'Easy (5-6 letter words)':
             return random.choice(data["easy_words"])
-        elif user_difficulty == 'medium (7-9 letter words)':
+        elif user_difficulty == 'Medium (7-9 letter words)':
             return random.choice(data["medium_words"])
-        elif user_difficulty == 'hard (10-13 letter words)':
+        elif user_difficulty == 'Hard (10-13 letter words)':
             return random.choice(data["hard_words"])
     except:
         print(
@@ -35,11 +42,10 @@ def get_word():
         exit() # Closing program to prevent further errors
 
 def game(word_to_guess):
-    # Setting up the display of what letters you have guessed
-    guessed_word = ['_ '] * len(word_to_guess)
-    all_letters = string.ascii_lowercase
-    win = False
-    turn_message = 'Good luck!'
+    guessed_word = ['_ '] * len(word_to_guess) # Setting up display of letters guessed
+    all_letters = string.ascii_lowercase # All letters string to show what letters haven't been guessed
+    win = False # Win condition to exit loop
+    turn_message = 'Good luck!' # Setting up turn message
 
     # Calculate number of tries the user has depending on word length
     tries = len(word_to_guess)
@@ -48,14 +54,24 @@ def game(word_to_guess):
 
     while True: # Repeating this for the amount of tries you have
         # Displaying turn info
-        guess = enterbox(
-            f'{turn_message}\n'
-            f'You have {tries} tries left.\n'
-            f'Letters you can guess: {all_letters}\n'
-            f'{''.join(guessed_word)}\n'
-            'Enter a letter to guess:',
-            'Guess'
-        ).lower().strip()
+        while True:
+            guess = enterbox(
+                f'{turn_message}\n'
+                f'You have {tries} tries left.\n'
+                f'Letters you can guess: {all_letters}\n'
+                f'{''.join(guessed_word)}\n'
+                'Enter a letter to guess:',
+                'Guess'
+            ) # Guess input box with all needed info
+            if guess == '': # Handling for pretting enter without typing anything
+                msgbox('Make sure you enter a letter.', 'error')
+            elif guess == None: # Handling for cancel button or x button
+                confirm_exit = ynbox('Are you sure you want to exit?', 'Exit confirmation')
+                if confirm_exit: # Exiting logic
+                    exit()
+            else:
+                guess = guess.lower().strip() # lower and strip here to stop nonetype errors
+                break
 
         if len(guess) > 1: # Making sure you can't accidentally type more than one letter
             turn_message = 'Make sure your answer is only one letter.'
@@ -70,9 +86,9 @@ def game(word_to_guess):
                     turn_message = 'That letter is not in this word.'
                     tries -= 1
                 else:
-                    turn_message = 'Good guess!'
+                    turn_message = 'Good guess!' # Correct guess logic
                     digit = 0
-                    for i in word_to_guess:
+                    for i in word_to_guess: # Checking each letter for the guess, handles multiple intances of the same letter
                         if word_to_guess[digit] == guess:
                             guessed_word[digit] = guessed_word[digit].replace('_ ', i)
                         digit +=1
@@ -84,14 +100,21 @@ def game(word_to_guess):
                     break
 
         if tries == 0:
-            break
+            break # Exit loop when you run out of triess
 
     # Lose
     if win == False:
         msgbox(f'You lose!\nThe word was {word_to_guess}.')
 
 def main(word_to_guess):
-    word_to_guess = get_word()
+    msgbox(
+        'INFORMATION:\n'
+        'You will be able to select a difficulty, which will change the amount of letters in the word.\n'
+        'To guess, type a letter in the input box. You will be able to see what letters you have guessed, and the amount of correct letters you already have. It is not case sensitive.\n'
+        'The amount of tries you have is matched to the length of the word up to 10 tries. Tries will only go down for guessing incorrectly.\n'
+        'If you manage to guess your word, you win!'
+    ) # Information message box
+    word_to_guess =  get_word()
     game(word_to_guess=word_to_guess)
 
 if __name__ == '__main__':
