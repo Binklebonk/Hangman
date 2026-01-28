@@ -17,7 +17,8 @@ def get_word():
     while True:
         user_difficulty = buttonbox(
             'What difficulty do you want to play?\n',
-            'Difficulty', ['Easy (5-6 letter words)', 'Medium (7-9 letter words)', 'Hard (10-13 letter words)']) # Setting user input to lowercase and removing extra spaces
+            'Difficulty', ['Easy (5-6 letter words)', 'Medium (7-9 letter words)', 'Hard (10-13 letter words)']
+        ) # Setting user input to lowercase and removing extra spaces
         if user_difficulty == None: # If x button clicked
             confirm_exit = ynbox('Are you sure you want to exit?', 'Exit confirmation')
             if confirm_exit:
@@ -77,7 +78,10 @@ def game(word_to_guess):
             turn_message = 'Make sure your answer is only one letter.'
         else:
             if guess not in all_letters: # Making sure you can't guess the same letter twice
-                turn_message = 'You already guessed that.'
+                if guess not in string.ascii_letters:
+                    turn_message = 'Please enter a letter.'
+                else:
+                    turn_message = 'You already guessed that.'
             else:
                 all_letters = all_letters.replace(guess, '_ ') # Removing letter from letter list
 
@@ -108,11 +112,14 @@ def game(word_to_guess):
 
 def main(word_to_guess):
     msgbox(
-        'INFORMATION:\n'
-        'You will be able to select a difficulty, which will change the amount of letters in the word.\n'
-        'To guess, type a letter in the input box. You will be able to see what letters you have guessed, and the amount of correct letters you already have. It is not case sensitive.\n'
-        'The amount of tries you have is matched to the length of the word up to 10 tries. Tries will only go down for guessing incorrectly.\n'
-        'If you manage to guess your word, you win!'
+        'WELCOME TO HANGMAN!\n'
+        'You will be able to select a difficulty, which will change the amount of letters in the word.\n\n'
+        'To guess, type a letter in the input box. You will be able to see what letters you have guessed,'
+        'and the amount of correct letters you already have. It is not case sensitive.\n\n'
+        'The amount of tries you have is matched to the length of the word up to 10 tries.'
+        'Tries will only go down for guessing incorrectly.\n\n'
+        'If you manage to guess your word, you win!\nGood luck!',
+        'Welcome to Hangman'
     ) # Information message box
     word_to_guess =  get_word()
     game(word_to_guess=word_to_guess)
