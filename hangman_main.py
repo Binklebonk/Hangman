@@ -11,7 +11,7 @@ try: # Installing easygui
     from easygui import *
 except:
     print('Easygui library not found. Installing...')
-    os.system('pip install easygui') # Using pip to load library
+    os.system('pip install easygui') # Using pip to install library
 
 def get_word():
     while True:
@@ -43,25 +43,28 @@ def get_word():
         exit() # Closing program to prevent further errors
 
 def leaderboard(write, difficulty, tries): # Leaderboard program
-    if write == True:
+    if write == True: # If user has chosen to add their score to the leaderboard
         message = ''
-        while True:
+        while True: # Looping until correct username length
             username = enterbox(f'{message}What is your username? No more than 11 characters.', 'Enter username')
             if len(username) > 11:
                 message == 'Username too long. Try again.\n'
+            elif username == '' or username == None:
+                message == 'Please enter a username. Try again.\n'
             else: break
-        with open('leaderboard.json') as f:
+        with open('leaderboard.json') as f: # Getting data from json file
             data = json.load(f)
+        # Adding data to lists
         data["username"].append(username)
         data["difficulty"].append(difficulty)
-        data["tries_remaining"  ].append(str(tries))
+        data["tries_remaining"].append(str(tries))
         with open('leaderboard.json', 'w') as f:
-            json.dump(data, f, indent = 4)
+            json.dump(data, f, indent = 4) # Writing data
 
     display = 'Username    Difficulty   Tries left\n'
-    '-------------------------------------\n' # Formatting
+    '-------------------------------------\n' # Formatting for display
     digit = 0
-    with open('leaderboard.json') as f:
+    with open('leaderboard.json') as f: # Getting leaderboard data
             data = json.load(f)
     for i in data["username"]: # Repeating for amount of users
         display += data["username"][digit] # Adding username
@@ -75,8 +78,7 @@ def leaderboard(write, difficulty, tries): # Leaderboard program
             display += ' '
         display += '\n'
         digit += 1
-
-    textbox('LEADERBOARD\nRead only, edits are ignored', 'Leaderboard', display)
+    textbox('LEADERBOARD\nRead only, edits are ignored', 'Leaderboard', display) # Textbox to print out data
 
 def game(word_to_guess):
     guessed_word = ['_ '] * len(word_to_guess) # Setting up display of letters guessed
@@ -111,7 +113,7 @@ def game(word_to_guess):
                 break
 
         if len(guess) > 1: # Making sure you can't accidentally type more than one letter
-            if guess == word_to_guess:
+            if guess == word_to_guess: # If the user guesses the whole word
                 win = True
                 add_to_leaderboard = ynbox(
                     'You guessed the word! Good job.\n'
@@ -160,7 +162,7 @@ def game(word_to_guess):
                         'You win! Good job.\n'
                         'Do you want to add your score to the leaderboard?',
                         'Win'
-                    )
+                    ) # Option to write to leader board
                     if not add_to_leaderboard:
                         break
                     if add_to_leaderboard:
@@ -191,11 +193,11 @@ def main(word_to_guess):
             'The amount of tries you have is matched to the length of the word up to 10 tries.'
             'Tries will only go down for guessing incorrectly.\n\n'
             'If you manage to guess your word, you win!\nGood luck!',
-            'Welcome to Hangman', ['Ok', 'Leaderboard', 'Exit']
+            'Welcome to Hangman', ['Play', 'Leaderboard', 'Exit']
         ) # Information and rules message box
         if welcome_box == 'Leaderboard':
             leaderboard(write = False, difficulty = None, tries = None)
-        elif welcome_box == 'Ok':
+        elif welcome_box == 'Play':
             word_to_guess =  get_word()
             game(word_to_guess = word_to_guess)
         else:
