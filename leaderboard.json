@@ -1,11 +1,17 @@
 {
     "username": [
-        "Noah"
+        "Noah",
+        "Deedsicle",
+        "Jesse"
     ],
     "difficulty": [
+        "Medium",
+        "Medium",
         "Medium"
     ],
     "tries_remaining": [
+        "6",
+        "8",
         "6"
     ]
 }
