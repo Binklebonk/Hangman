@@ -2,16 +2,22 @@
     "username": [
         "Noah",
         "Deedsicle",
-        "Jesse"
+        "Jesse",
+        "Mum",
+        "Tammy"
     ],
     "difficulty": [
         "Medium",
         "Medium",
-        "Medium"
+        "Medium",
+        "Medium",
+        "Hard"
     ],
     "tries_remaining": [
         "6",
         "8",
-        "6"
+        "6",
+        "7",
+        "7"
     ]
 }
