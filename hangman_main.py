@@ -14,27 +14,9 @@ except:
     os.system('pip install easygui') # Using pip to install library
 
 def get_word():
-    while True:
-        user_difficulty = buttonbox(
-            'What difficulty do you want to play?\n',
-            'Difficulty', ['Easy (5-6 letter words)', 'Medium (7-9 letter words)', 'Hard (10-13 letter words)']
-        ) # Setting user input to lowercase and removing extra spaces
-        if user_difficulty == None: # If x button clicked
-            confirm_exit = ynbox('Are you sure you want to exit?', 'Exit confirmation')
-            if confirm_exit:
-                exit()
-        else: break # Continue in loop if no
-
     try: # Opening the json file with word lists
         with open('words.json', 'r') as f:
-            data = json.load(f)
-        # Returning random word from corresponding list depending on chosen difficulty
-        if user_difficulty == 'Easy (5-6 letter words)':
-            return random.choice(data["easy_words"])
-        elif user_difficulty == 'Medium (7-9 letter words)':
-            return random.choice(data["medium_words"])
-        elif user_difficulty == 'Hard (10-13 letter words)':
-            return random.choice(data["hard_words"])
+            return random.choice(json.load(f)["hard_words"])
     except:
         print(
             'There was an error with the json word file.\n'
