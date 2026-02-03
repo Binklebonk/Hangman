@@ -195,12 +195,12 @@ def main(word_to_guess):
         welcome_box = buttonbox(
             'WELCOME TO HANGMAN!\n'
             'You can select a difficulty, which will change the amount of letters in the word.\n\n'
-            'To guess, type a letter in the input box. You will see what letters you have guessed, '
-            'and the amount of correct letters you already have. It is not case sensitive.\n\n'
-            'If you think you know what the finished word is, then type it in and guess.'
+            'To guess, click the button with the letter you want. Once a letter is guessed,'
+            'it will dissapear so you can\'t guess it again.\n\n'
+            'If you think you know what the finished word is, click the guess button and type your guess.'
             'But be careful, you only have one try! If you guess a word and it\'s wrong, game over.\n\n'
-            'The number of tries you have is matched to the length of the word, up to 10 tries.\n\n'
-            'If you manage to guess your word, you win!\nGood luck!',
+            'The number of tries you have is matched to the length of the word plus one, up to 10 tries.\n\n'
+            'If you manage to guess your word, you win! But if you get it wrong, you lose.\nGood luck!',
             'Welcome to Hangman', ['Play', 'Leaderboard', 'Exit']
         ) # Information and rules message box
         if welcome_box == 'Leaderboard':
