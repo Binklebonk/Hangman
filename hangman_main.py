@@ -81,7 +81,7 @@ def leaderboard(write, difficulty, tries): # Leaderboard program
     textbox('LEADERBOARD\nRead only, edits are ignored', 'Leaderboard', display) # Textbox to print out data
 
 def game(word_to_guess):
-    guessed_word = ['_ '] * len(word_to_guess) # Setting up display of letters guessed
+    guessed_word = ['_ '] * len(word_to_guess) # Setting up the display of letters guessed
     all_letters = string.ascii_lowercase # All letters string to show what letters haven't been guessed
     win = False # Win condition to exit loop
     bad_guess = False
