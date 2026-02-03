@@ -47,10 +47,10 @@ def leaderboard(write, difficulty, tries): # Leaderboard program
         message = ''
         while True: # Looping until correct username length
             username = enterbox(f'{message}What is your username? No more than 11 characters.', 'Enter username')
-            if len(username) > 11:
-                message == 'Username too long. Try again.\n'
-            elif username == '' or username == None:
+            if username == '' or username == None:
                 message == 'Please enter a username. Try again.\n'
+            elif len(username) > 11:
+                message == 'Username too long. Try again.\n'
             else: break
         with open('leaderboard.json') as f: # Getting data from json file
             data = json.load(f)
@@ -68,7 +68,7 @@ def leaderboard(write, difficulty, tries): # Leaderboard program
             data = json.load(f)
     for i in data["username"]: # Repeating for amount of users
         display += data["username"][digit] # Adding username
-        for i in range(12 - len(data["username"][digit])):
+        for i in range(16 - len(data["username"][digit])):
             display += ' '
         display += data["difficulty"][digit] # Adding difficulty
         for i in range(13 - len(data["difficulty"][digit])):
