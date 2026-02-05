@@ -18,7 +18,7 @@ def get_word():
         user_difficulty = buttonbox(
             'What difficulty do you want to play?\n',
             'Difficulty', ['Easy (5-6 letter words)', 'Medium (7-9 letter words)', 'Hard (10-13 letter words)']
-        ) # Setting user input to lowercase and removing extra spaces
+        ) # Setting the user input to lowercase and removing extra spaces
         if user_difficulty == None: # If x button clicked
             confirm_exit = ynbox('Are you sure you want to exit?', 'Exit confirmation')
             if confirm_exit:
