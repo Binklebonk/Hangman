@@ -44,6 +44,11 @@ def get_word():
 
 def leaderboard(write, difficulty, tries): # Leaderboard program
     if write == True: # If user has chosen to add their score to the leaderboard
+        score = tries
+        if difficulty == 'Medium':
+            score *= 1.5
+        elif difficulty == 'Hard':
+            score *= 2
         message = ''
         while True: # Looping until correct username length
             username = enterbox(f'{message}What is your username? No more than 11 characters.', 'Enter username')
@@ -57,11 +62,11 @@ def leaderboard(write, difficulty, tries): # Leaderboard program
         # Adding data to lists
         data["username"].append(username)
         data["difficulty"].append(difficulty)
-        data["tries_remaining"].append(str(tries))
+        data["score"].append(str(score))
         with open('leaderboard.json', 'w') as f:
             json.dump(data, f, indent = 4) # Writing data
 
-    display = 'Username    Difficulty   Tries left\n'
+    display = 'Username    Difficulty   Score\n'
     '-------------------------------------\n' # Formatting for display
     digit = 0
     with open('leaderboard.json') as f: # Getting leaderboard data
@@ -73,8 +78,8 @@ def leaderboard(write, difficulty, tries): # Leaderboard program
         display += data["difficulty"][digit] # Adding difficulty
         for i in range(13 - len(data["difficulty"][digit])):
             display += ' '
-        display += data["tries_remaining"][digit] # Adding tries remaining
-        for i in range (3 - len(data["tries_remaining"][digit])):
+        display += data["score"][digit] # Adding tries remaining
+        for i in range (3 - len(data["score"][digit])):
             display += ' '
         display += '\n'
         digit += 1
@@ -112,7 +117,7 @@ def game(word_to_guess):
         all_letters.remove(guess) # Removing guess from letter list
 
         if guess == 'Guess word': # Making sure you can't accidentally type more than one letter
-            guess == enterbox('Guess the word', 'Guess')
+            guess = enterbox('Guess the word', 'Guess')
             if guess == word_to_guess: # If the user guesses the whole word
                 win = True
                 add_to_leaderboard = ynbox(
