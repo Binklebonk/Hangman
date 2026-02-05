@@ -82,7 +82,8 @@ def leaderboard(write, difficulty, tries): # Leaderboard program
 
 def game(word_to_guess):
     guessed_word = ['_ '] * len(word_to_guess) # Setting up display of letters guessed
-    all_letters = string.ascii_lowercase # All letters string to show what letters haven't been guessed
+    all_letters = list(string.ascii_lowercase) # All letters string to show what letters haven't been guessed
+    all_letters.append('Guess word')
     win = False # Win condition to exit loop
     bad_guess = False
     turn_message = 'Good luck!' # Setting up turn message
@@ -95,92 +96,78 @@ def game(word_to_guess):
     while True: # Repeating this for the amount of tries you have
         # Displaying turn info
         while True:
-            guess = enterbox(
+            guess = buttonbox(
                 f'{turn_message}\n'
                 f'You have {tries} tries left.\n'
-                f'Letters you can guess: {all_letters}\n'
                 f'{''.join(guessed_word)}\n'
-                'Enter a letter to guess:',
-                'Guess'
+                'Select a letter to guess:',
+                'Guess', all_letters
             ) # Guess input box with all needed info
-            if guess == '': # Handling for pretting enter without typing anything
-                msgbox('Make sure you enter a letter.', 'error')
-            elif guess == None: # Handling for cancel button or x button
+            if guess == None: # Handling for cancel button or x button
                 confirm_exit = ynbox('Are you sure you want to exit?', 'Exit confirmation')
                 if confirm_exit: # Exiting logic
                     exit()
             else:
-                guess = guess.lower().strip() # lower and strip here to stop nonetype errors
+                break
+        all_letters.remove(guess) # Removing guess from letter list
+
+        if guess == 'Guess word': # Making sure you can't accidentally type more than one letter
+            guess == enterbox('Guess the word', 'Guess')
+            if guess == word_to_guess: # If the user guesses the whole word
+                win = True
+                add_to_leaderboard = ynbox(
+                    'You guessed the word! Good job.\n'
+                    'Do you want to add your score to the leaderboard?',
+                    'Win'
+                )
+                if not add_to_leaderboard:
+                    break
+                if add_to_leaderboard:
+                    # Setting difficulty, as it is not stored at any point
+                    if len(word_to_guess) < 7:
+                        difficulty = 'Easy'
+                    elif len(word_to_guess) >= 7 and len(word_to_guess) < 10:
+                        difficulty = 'Medium'
+                    else:
+                        difficulty = 'Hard'
+                    leaderboard(write = True, difficulty = difficulty, tries = tries)
+                    break
+            else: # Lose
+                tries == 0
                 break
 
-        if len(guess) > 1: # Making sure you can't accidentally type more than one letter
-            if len(guess) == len(word_to_guess):
-                if guess == word_to_guess: # If the user guesses the whole word
-                    win = True
-                    add_to_leaderboard = ynbox(
-                        'You guessed the word! Good job.\n'
-                        'Do you want to add your score to the leaderboard?',
-                        'Win'
-                    )
-                    if not add_to_leaderboard:
-                        break
-                    if add_to_leaderboard:
-                        # Setting difficulty, as it is not stored at any point
-                        if len(word_to_guess) < 7:
-                            difficulty = 'Easy'
-                        elif len(word_to_guess) >= 7 and len(word_to_guess) < 10:
-                            difficulty = 'Medium'
-                        else:
-                            difficulty = 'Hard'
-                        leaderboard(write = True, difficulty = difficulty, tries = tries)
-                        break
-                else:
-                    bad_guess = True
-                    tries = 0
-            else:
-                turn_message = 'Make sure your answer is only one letter.'
-        else:
-            if guess not in all_letters: # Making sure you can't guess the same letter twice
-                if guess not in string.ascii_letters:
-                    turn_message = 'Please enter a letter.'
-                else:
-                    turn_message = 'You already guessed that.'
-                    tries -= 1
-            else:
-                all_letters = all_letters.replace(guess, '_ ') # Removing letter from letter list
+        else: # Handling for guessing letter
+            if guess in list(word_to_guess):
+                turn_message = 'Good guess!' # Correct guess logic
+                digit = 0
+                for i in word_to_guess: # Checking each letter for the guess, handles multiple intances of the same letter
+                    if word_to_guess[digit] == guess:
+                        guessed_word[digit] = guessed_word[digit].replace('_ ', i)
+                    digit +=1
+            else: # Incorrect
+                turn_message = 'That letter is not in this word.'
+                tries -=1
 
-                # Loop to replace the guessed letter as many times as it appears in the word
-                if guess not in word_to_guess:
-                    turn_message = 'That letter is not in this word.'
-                    tries -= 1
+        # Win condition
+        if '_ ' not in guessed_word:
+            win = True
+            add_to_leaderboard = ynbox(
+                'You win! Good job.\n'
+                'Do you want to add your score to the leaderboard?',
+                'Win'
+            ) # Option to write to leader board
+            if not add_to_leaderboard:
+                break
+            if add_to_leaderboard:
+                # Setting difficulty, as it is not stored at any point
+                if len(word_to_guess) < 7:
+                    difficulty = 'Easy'
+                elif len(word_to_guess) >= 7 and len(word_to_guess) < 10:
+                    difficulty = 'Medium'
                 else:
-                    turn_message = 'Good guess!' # Correct guess logic
-                    digit = 0
-                    for i in word_to_guess: # Checking each letter for the guess, handles multiple intances of the same letter
-                        if word_to_guess[digit] == guess:
-                            guessed_word[digit] = guessed_word[digit].replace('_ ', i)
-                        digit +=1
-
-                # Win condition
-                if '_ ' not in guessed_word:
-                    win = True
-                    add_to_leaderboard = ynbox(
-                        'You win! Good job.\n'
-                        'Do you want to add your score to the leaderboard?',
-                        'Win'
-                    ) # Option to write to leader board
-                    if not add_to_leaderboard:
-                        break
-                    if add_to_leaderboard:
-                        # Setting difficulty, as it is not stored at any point
-                        if len(word_to_guess) < 7:
-                            difficulty = 'Easy'
-                        elif len(word_to_guess) >= 7 and len(word_to_guess) < 10:
-                            difficulty = 'Medium'
-                        else:
-                            difficulty = 'Hard'
-                        leaderboard(write = True, difficulty = difficulty, tries = tries)
-                        break
+                    difficulty = 'Hard'
+                leaderboard(write = True, difficulty = difficulty, tries = tries)
+                break
 
         if tries == 0: break # Exit loop when you run out of tries
 
