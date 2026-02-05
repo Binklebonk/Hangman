@@ -42,7 +42,7 @@ def get_word():
         )
         exit() # Closing program to prevent further errors
 
-def leaderboard(write, difficulty, tries): # Leaderboard program
+def leaderboard(write, difficulty, score): # Leaderboard program
     if write == True: # If user has chosen to add their score to the leaderboard
         message = ''
         while True: # Looping until correct username length
@@ -57,7 +57,7 @@ def leaderboard(write, difficulty, tries): # Leaderboard program
         # Adding data to lists
         data["username"].append(username)
         data["difficulty"].append(difficulty)
-        data["tries_remaining"].append(str(tries))
+        data["score"].append(str(score))
         with open('leaderboard.json', 'w') as f:
             json.dump(data, f, indent = 4) # Writing data
 
@@ -73,8 +73,8 @@ def leaderboard(write, difficulty, tries): # Leaderboard program
         display += data["difficulty"][digit] # Adding difficulty
         for i in range(13 - len(data["difficulty"][digit])):
             display += ' '
-        display += data["tries_remaining"][digit] # Adding tries remaining
-        for i in range (3 - len(data["tries_remaining"][digit])):
+        display += data["score"][digit] # Adding tries remaining
+        for i in range (3 - len(data["score"][digit])):
             display += ' '
         display += '\n'
         digit += 1
@@ -86,6 +86,7 @@ def game(word_to_guess):
     all_letters.append('Guess word')
     win = False # Win condition to exit loop
     bad_guess = False
+    score = 0
     turn_message = 'Good luck!' # Setting up turn message
 
     # Calculate number of tries the user has depending on word length
@@ -117,6 +118,7 @@ def game(word_to_guess):
                 win = True
                 add_to_leaderboard = ynbox(
                     'You guessed the word! Good job.\n'
+                    f'Your score was {score}.\n'
                     'Do you want to add your score to the leaderboard?',
                     'Win'
                 )
@@ -130,7 +132,7 @@ def game(word_to_guess):
                         difficulty = 'Medium'
                     else:
                         difficulty = 'Hard'
-                    leaderboard(write = True, difficulty = difficulty, tries = tries)
+                    leaderboard(write = True, difficulty = difficulty, score = score)
                     break
             else: # Lose
                 tries == 0
@@ -140,6 +142,7 @@ def game(word_to_guess):
             if guess in list(word_to_guess):
                 turn_message = 'Good guess!' # Correct guess logic
                 digit = 0
+                score += 1
                 for i in word_to_guess: # Checking each letter for the guess, handles multiple intances of the same letter
                     if word_to_guess[digit] == guess:
                         guessed_word[digit] = guessed_word[digit].replace('_ ', i)
@@ -147,12 +150,14 @@ def game(word_to_guess):
             else: # Incorrect
                 turn_message = 'That letter is not in this word.'
                 tries -=1
+                score -= 1
 
         # Win condition
         if '_ ' not in guessed_word:
             win = True
             add_to_leaderboard = ynbox(
                 'You win! Good job.\n'
+                f'Your score was {score}.\n'
                 'Do you want to add your score to the leaderboard?',
                 'Win'
             ) # Option to write to leader board
@@ -166,14 +171,17 @@ def game(word_to_guess):
                     difficulty = 'Medium'
                 else:
                     difficulty = 'Hard'
-                leaderboard(write = True, difficulty = difficulty, tries = tries)
+                leaderboard(write = True, difficulty = difficulty, score = score)
                 break
 
         if tries == 0: break # Exit loop when you run out of tries
 
     # Lose
     if win == False and bad_guess == False:
-        msgbox(f'You lose!\nThe word was {word_to_guess}.')
+        msgbox(
+            f'You lose!\nThe word was {word_to_guess}.\n'
+            f'Your score was {score}.'
+        )
     elif win == False and bad_guess == True:
         msgbox(f'You guessed the word incorrect. Better luck next time!\nThe word was {word_to_guess}.')
 
@@ -191,7 +199,7 @@ def main(word_to_guess):
             'Welcome to Hangman', ['Play', 'Leaderboard', 'Exit']
         ) # Information and rules message box
         if welcome_box == 'Leaderboard':
-            leaderboard(write = False, difficulty = None, tries = None)
+            leaderboard(write = False, difficulty = None, score = None)
         elif welcome_box == 'Play':
             word_to_guess =  get_word()
             game(word_to_guess = word_to_guess)

@@ -1,32 +1,11 @@
 {
     "username": [
-        "Noah",
-        "Deedsicle",
-        "Jesse",
-        "Mum",
-        "Tammy",
-        "MrFatCat",
-        "George Bush",
         "Noah"
     ],
     "difficulty": [
-        "Medium",
-        "Medium",
-        "Medium",
-        "Medium",
-        "Hard",
-        "Medium",
-        "Hard",
         "Hard"
     ],
-    "tries_remaining": [
-        "6",
-        "8",
-        "6",
-        "7",
-        "7",
-        "9",
-        "9",
-        "9"
+    "score": [
+        "4"
     ]
 }
