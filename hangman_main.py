@@ -59,6 +59,7 @@ def leaderboard(write, difficulty, tries): # Leaderboard program
                 message = 'Username too long. Try again.\n'
             else: break
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         with open('leaderboard.json') as f: # Getting data from json file
             data = json.load(f)
         # Adding data to lists
@@ -97,6 +98,18 @@ def leaderboard(write, difficulty, tries): # Leaderboard program
             with open('leaderboard.json', 'w') as f:
                 json.dump(data, f, indent = 4) # Writing data
 
+=======
+        if cancel == False:
+            with open('leaderboard.json') as f: # Getting data from json file
+                data = json.load(f)
+            # Adding data to lists
+            data["username"].append(username)
+            data["difficulty"].append(difficulty)
+            data["score"].append(str(score))
+            with open('leaderboard.json', 'w') as f:
+                json.dump(data, f, indent = 4) # Writing data
+
+>>>>>>> Stashed changes
     if cancel == False:
         display = 'Username        Difficulty   Score\n'
         '-------------------------------------\n' # Formatting for display
@@ -116,6 +129,9 @@ def leaderboard(write, difficulty, tries): # Leaderboard program
             display += '\n'
             digit += 1
         textbox('LEADERBOARD\nRead only, edits are ignored', 'Leaderboard', display) # Textbox to print out data
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 def game(word_to_guess):
