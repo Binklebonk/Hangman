@@ -43,15 +43,22 @@ def get_word():
         exit() # Closing program to prevent further errors
 
 def leaderboard(write, difficulty, tries): # Leaderboard program
+    cancel = False
     if write == True: # If user has chosen to add their score to the leaderboard
         message = ''
         while True: # Looping until correct username length
-            username = enterbox(f'{message}What is your username? No more than 11 characters.', 'Enter username')
-            if username == '' or username == None:
-                message == 'Please enter a username. Try again.\n'
-            elif len(username) > 11:
-                message == 'Username too long. Try again.\n'
+            username = enterbox(f'{message}What is your username? No more than 12 characters.', 'Enter username')
+            if username == None:
+                confirm_exit = ynbox('Are you sure you want to exit?', 'Exit confirmation')
+                if confirm_exit: # Exiting logic
+                    cancel = True
+                    break
+            elif username == '':
+                message = 'Please enter a username. Try again.\n'
+            elif len(username) > 12:
+                message = 'Username too long. Try again.\n'
             else: break
+<<<<<<< Updated upstream
         with open('leaderboard.json') as f: # Getting data from json file
             data = json.load(f)
         # Adding data to lists
@@ -79,6 +86,37 @@ def leaderboard(write, difficulty, tries): # Leaderboard program
         display += '\n'
         digit += 1
     textbox('LEADERBOARD\nRead only, edits are ignored', 'Leaderboard', display) # Textbox to print out data
+=======
+        if cancel == False:
+            with open('leaderboard.json') as f: # Getting data from json file
+                data = json.load(f)
+            # Adding data to lists
+            data["username"].append(username)
+            data["difficulty"].append(difficulty)
+            data["score"].append(str(score))
+            with open('leaderboard.json', 'w') as f:
+                json.dump(data, f, indent = 4) # Writing data
+
+    if cancel == False:
+        display = 'Username        Difficulty   Score\n'
+        '-------------------------------------\n' # Formatting for display
+        digit = 0
+        with open('leaderboard.json') as f: # Getting leaderboard data
+                data = json.load(f)
+        for i in data["username"]: # Repeating for amount of users
+            display += data["username"][digit] # Adding username
+            for i in range(16 - len(data["username"][digit])):
+                display += ' '
+            display += data["difficulty"][digit] # Adding difficulty
+            for i in range(13 - len(data["difficulty"][digit])):
+                display += ' '
+            display += data["score"][digit] # Adding tries remaining
+            for i in range (3 - len(data["score"][digit])):
+                display += ' '
+            display += '\n'
+            digit += 1
+        textbox('LEADERBOARD\nRead only, edits are ignored', 'Leaderboard', display) # Textbox to print out data
+>>>>>>> Stashed changes
 
 def game(word_to_guess):
     guessed_word = ['_ '] * len(word_to_guess) # Setting up display of letters guessed
@@ -193,7 +231,8 @@ def main(word_to_guess):
         if welcome_box == 'Leaderboard':
             leaderboard(write = False, difficulty = None, tries = None)
         elif welcome_box == 'Play':
-            word_to_guess =  get_word()
+            word_to_guess = get_word()
+            print(word_to_guess)
             game(word_to_guess = word_to_guess)
         else:
             confirm_exit = ynbox('Are you sure you want to exit?', 'Exit confirmation')
@@ -201,4 +240,5 @@ def main(word_to_guess):
                 exit()
 
 if __name__ == '__main__':
-    main(word_to_guess=None)
+    print('This program doesn\'t work on python version 3.11.9 because of an f string error. It was written using python 3.13.9.')
+    main(word_to_guess = None)

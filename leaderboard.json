@@ -1,6 +1,7 @@
 {
     "username": [
         "Noah",
+<<<<<<< Updated upstream
         "Deedsicle",
         "Jesse",
         "Mum",
@@ -28,5 +29,19 @@
         "9",
         "9",
         "9"
+=======
+        "Noah",
+        "Matthew"
+    ],
+    "difficulty": [
+        "Easy",
+        "Hard",
+        "Hard"
+    ],
+    "score": [
+        "3",
+        "20",
+        "12"
+>>>>>>> Stashed changes
     ]
 }
