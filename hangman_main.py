@@ -45,6 +45,11 @@ def get_word():
 def leaderboard(write, difficulty, tries): # Leaderboard program
     cancel = False
     if write == True: # If user has chosen to add their score to the leaderboard
+        score = tries
+        if difficulty == 'Medium':
+            score *= 1.5
+        elif difficulty == 'Hard':
+            score *= 2
         message = ''
         while True: # Looping until correct username length
             username = enterbox(f'{message}What is your username? No more than 12 characters.', 'Enter username')
@@ -58,36 +63,6 @@ def leaderboard(write, difficulty, tries): # Leaderboard program
             elif len(username) > 12:
                 message = 'Username too long. Try again.\n'
             else: break
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        with open('leaderboard.json') as f: # Getting data from json file
-            data = json.load(f)
-        # Adding data to lists
-        data["username"].append(username)
-        data["difficulty"].append(difficulty)
-        data["tries_remaining"].append(str(tries))
-        with open('leaderboard.json', 'w') as f:
-            json.dump(data, f, indent = 4) # Writing data
-
-    display = 'Username    Difficulty   Tries left\n'
-    '-------------------------------------\n' # Formatting for display
-    digit = 0
-    with open('leaderboard.json') as f: # Getting leaderboard data
-            data = json.load(f)
-    for i in data["username"]: # Repeating for amount of users
-        display += data["username"][digit] # Adding username
-        for i in range(16 - len(data["username"][digit])):
-            display += ' '
-        display += data["difficulty"][digit] # Adding difficulty
-        for i in range(13 - len(data["difficulty"][digit])):
-            display += ' '
-        display += data["tries_remaining"][digit] # Adding tries remaining
-        for i in range (3 - len(data["tries_remaining"][digit])):
-            display += ' '
-        display += '\n'
-        digit += 1
-    textbox('LEADERBOARD\nRead only, edits are ignored', 'Leaderboard', display) # Textbox to print out data
-=======
         if cancel == False:
             with open('leaderboard.json') as f: # Getting data from json file
                 data = json.load(f)
@@ -98,18 +73,6 @@ def leaderboard(write, difficulty, tries): # Leaderboard program
             with open('leaderboard.json', 'w') as f:
                 json.dump(data, f, indent = 4) # Writing data
 
-=======
-        if cancel == False:
-            with open('leaderboard.json') as f: # Getting data from json file
-                data = json.load(f)
-            # Adding data to lists
-            data["username"].append(username)
-            data["difficulty"].append(difficulty)
-            data["score"].append(str(score))
-            with open('leaderboard.json', 'w') as f:
-                json.dump(data, f, indent = 4) # Writing data
-
->>>>>>> Stashed changes
     if cancel == False:
         display = 'Username        Difficulty   Score\n'
         '-------------------------------------\n' # Formatting for display
@@ -129,10 +92,6 @@ def leaderboard(write, difficulty, tries): # Leaderboard program
             display += '\n'
             digit += 1
         textbox('LEADERBOARD\nRead only, edits are ignored', 'Leaderboard', display) # Textbox to print out data
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
 def game(word_to_guess):
     guessed_word = ['_ '] * len(word_to_guess) # Setting up display of letters guessed
@@ -166,7 +125,7 @@ def game(word_to_guess):
         all_letters.remove(guess) # Removing guess from letter list
 
         if guess == 'Guess word': # Making sure you can't accidentally type more than one letter
-            guess == enterbox('Guess the word', 'Guess')
+            guess = enterbox('Guess the word', 'Guess')
             if guess == word_to_guess: # If the user guesses the whole word
                 win = True
                 add_to_leaderboard = ynbox(

@@ -1,55 +1,9 @@
 {
     "username": [
-        "Noah",
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        "Deedsicle",
-        "Jesse",
-        "Mum",
-        "Tammy",
-        "MrFatCat",
-        "George Bush",
-        "Noah"
-=======
-        "Noah",
-        "Matthew"
->>>>>>> Stashed changes
+
     ],
     "difficulty": [
-        "Medium",
-        "Medium",
-        "Medium",
-        "Medium",
-        "Hard",
-        "Medium",
-        "Hard",
-        "Hard"
-    ],
-    "tries_remaining": [
-        "6",
-        "8",
-        "6",
-        "7",
-        "7",
-        "9",
-        "9",
-        "9"
-=======
-        "Noah",
-        "Matthew"
-    ],
-    "difficulty": [
-        "Easy",
-        "Hard",
-        "Hard"
     ],
     "score": [
-        "3",
-        "20",
-        "12"
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     ]
 }
