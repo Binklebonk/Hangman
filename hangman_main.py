@@ -28,7 +28,7 @@ def get_word():
     try: # Opening the json file with word lists
         with open('words.json', 'r') as f:
             data = json.load(f)
-        # Returning random word from corresponding list depending on chosen difficulty
+        # Returning a random word from corresponding list depending on chosen difficulty
         if user_difficulty == 'Easy (5-6 letter words)':
             return random.choice(data["easy_words"])
         elif user_difficulty == 'Medium (7-9 letter words)':
